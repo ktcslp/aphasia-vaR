@@ -2,7 +2,7 @@
 #step 2: change file="NCXXX.txt"...) to name of file on line 8
 #Step 3: change participant code in line 9
 #CTRL+A then Ctrl+ENTER
-#629d
+#629ds
 library(alineR)
 df <- read.csv(file="NC029.txt", header=FALSE, stringsAsFactors = FALSE)
 #df <- df[!apply(is.na(df) | df == "", 1, all),]
