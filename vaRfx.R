@@ -4,21 +4,22 @@
 #CTRL+A then Ctrl+ENTER
 #629ds
 library(alineR)
-df <- read.csv(file="NC029.txt", header=FALSE, stringsAsFactors = FALSE)
+df <- read.csv(file="NC025.txt", header=FALSE, stringsAsFactors = FALSE)
 #df <- df[!apply(is.na(df) | df == "", 1, all),]
 fn <- "NC029data.txt"
 df<-cbind(a = "k", df)
 #a<-c(df.new[1,1], df.new[1,3])
 #a<- paste(a, collapse="")
 #a<-gsub(" ", "", a, fixed = TRUE)
-for (i in 1: nrow(df)){ 
-  {if(df[i,1]==1)
-    for (i in 1:nrow(df)) {
-      first <- c(as.character(df[i,1]), df[i,3])
+artillerytarget <- df$V2[df$V1==1]
+artilleryproduction <- df$V3[df$V1==1]
+  
+    for (i in 1:nrow(df_new)) {
+      first <- as.character(df_new[i,1])
       first <- paste(first, collapse="")
       first<-gsub(" ", "", first, fixed = TRUE)
       
-      second <- c(as.character(df[i,1]), df[i,4])
+      second <- as.character(df_new[i,2])
       second <- paste(second, collapse="")
       second<-gsub(" ", "", second, fixed = TRUE)
       
@@ -122,8 +123,27 @@ for (i in 1: nrow(df)){
       a<-raw.alignment(a)
       
       #write.table(c(a$alignment1, a$alignment2), file=fn, append=TRUE)
-      write.table(c(a$alignment1, a$alignment2), file="major3.csv")
+      #write.table(c(a$alignment1, a$alignment2), file="major3.csv")
+      target <- gsub(" ", "", a$alignment1)
+      #target <- gsub("-", "", target)
+      target <- gsub("|", "", target)
+      target <- as.vector(lapply(a$alignment1,utf8ToInt))
+      target <- as.numeric(unlist(target))
+      target <- target[ target != c(32)]
+      target <- target[ target != 124]
+      #target <- target[ target != 45]
       
+      production <- gsub(" ", "", a$alignment2)
+      #production <- gsub("-", "", production)
+      production <- gsub("|", "", production)
+      production <- as.vector(lapply(a$alignment2,utf8ToInt))
+      production <- as.numeric(unlist(production))
+      production <- production[ production != c(32)]
+      production <- production[ production != 124]
+      #production <- production[ production != 45]
+      target = as.data.frame(t(target))
+      production = as.data.frame(t(production))
+      combineddf <- rbind(target, production)
     }
     target <- gsub(" ", "", a$alignment1)
     #target <- gsub("-", "", target)
