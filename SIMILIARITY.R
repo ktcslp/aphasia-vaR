@@ -211,6 +211,11 @@ for (i in 1:nrow(df)) {
 standard_deviation <- sd(data)
 coeff_variation <- standard_deviation/mean(data)
 
+data_final <- matrix(nrow=1, ncol=3)
+data_final <- data.frame(cbind(fn, standard_deviation, coeff_variation), stringsAsFactors = FALSE)
+write.table (data_final, file = "data.csv", append=TRUE, sep = ",", row.names = FALSE)
+
+write.table (c(standard_deviation, coeff_variation, fn), file = "data.csv", append = TRUE)
 #Kevin T Cunningham 7/10/19
 #www.github.com/ktcslp
 #fiat mihi secundum verbum tuum
